@@ -42,6 +42,7 @@
 #include <LiquidCrystal.h>
 byte EstadoDip[4];
 int seconds = 0;
+String txt = "";
 String dipTxt[4] = ("0","0","0","0");
 
 LiquidCrystal lcd_1(12, 11, 5, 4, 3, 2);
@@ -54,21 +55,31 @@ void setup()
 }
 
 void loop()
-{lcd_1.clear();
+{
+  lcd_1.clear();
   for(int i =0; i <= 3; i++){
     EstadoDip[i] = digitalRead(i+6);
   }
   
   if(EstadoDip[0] == 1 ){    
     dipTxt[0]= "1";
-    lcd_1.print(dipTxt[0]);
-  }else{
-    
-    lcd_1.setCursor(0 , 1);
-    lcd_1.print("Si se pudo else");
+  }if(EstadoDip[1] == 1){
+    dipTxt[1]= "1";
+  }if(EstadoDip[2] == 1){
+    dipTxt[1]= "1";
+  }if(EstadoDip[3] == 1){
+    dipTxt[1]= "1";
   }
 
+  for(int i =0; i <= 3; i++){
+    txt += EstadoDip[i];
+  }
+
+  //txt = EstadoDip[0] + EstadoDip[1] + EstadoDip[2] + EstadoDip[3];
+  //lcd_1.println(EstadoDip[0] + EstadoDip[1] + EstadoDip[2] + EstadoDip[3]);
+  lcd_1.print(txt);
   
   delay(1000);
+  txt = "";
   EstadoDip[0] = 0;
 }
