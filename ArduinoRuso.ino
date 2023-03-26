@@ -87,6 +87,11 @@ void loop()
     txtEstados += Estados[i];
   }
 
+  if(txt == "0000" && txtEstados == ""){
+    txtEstados = "No producto";  
+  }
+
+
   //txt = EstadoDip[0] + EstadoDip[1] + EstadoDip[2] + EstadoDip[3];
   //lcd_1.println(EstadoDip[0] + EstadoDip[1] + EstadoDip[2] + EstadoDip[3]);
   lcd_1.setCursor(1,0);
