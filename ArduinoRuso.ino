@@ -41,28 +41,39 @@
 
 #include <LiquidCrystal.h>
 byte EstadoDip[4];
-int seconds = 0;
+byte EstadoParo = 0;
 String txt = "";
+String txtEstados = "";
 String dipTxt[4] = ("0","0","0","0");
-
 LiquidCrystal lcd_1(12, 11, 5, 4, 3, 2);
+byte paro[1] = {1};
+String Estados[4] = ("","","","");
 
 void setup()
 {
   lcd_1.begin(16, 2); // Set up the number of columns and rows on the LCD.
   // Print a message to the LCD.
   //lcd_1.print("hello world!");
+  pinMode(10, INPUT);
+  pinMode(1, OUTPUT);
+  
+  
 }
 
 void loop()
 {
+//Clear display  
   lcd_1.clear();
-  for(int i =0; i <= 3; i++){
-    EstadoDip[i] = digitalRead(i+6);
+  paro[0] = digitalRead(10);
+  if(paro[0] == 0){
+    pinMode(1, HIGH);
+    for(int i =0; i <= 3; i++){
+    EstadoDip[i] = digitalRead(i+6);    
   }
   
   if(EstadoDip[0] == 1 ){    
     dipTxt[0]= "1";
+    Estados[0] = "Se detecto un producto";
   }if(EstadoDip[1] == 1){
     dipTxt[1]= "1";
   }if(EstadoDip[2] == 1){
@@ -73,13 +84,26 @@ void loop()
 
   for(int i =0; i <= 3; i++){
     txt += EstadoDip[i];
+    txtEstados += Estados[i];
   }
 
   //txt = EstadoDip[0] + EstadoDip[1] + EstadoDip[2] + EstadoDip[3];
   //lcd_1.println(EstadoDip[0] + EstadoDip[1] + EstadoDip[2] + EstadoDip[3]);
+  lcd_1.setCursor(1,0);
   lcd_1.print(txt);
-  
-  delay(1000);
+  lcd_1.setCursor(0,1);
+  lcd_1.print(txtEstados);
   txt = "";
-  EstadoDip[0] = 0;
+  txtEstados = "";
+  memset(Estados, 0 , sizeof(Estados));
+  memset(EstadoDip, 0 , sizeof(EstadoDip));
+  }else{
+    pinMode(1, LOW);
+    lcd_1.setCursor(0 ,1);
+    lcd_1.print("Paro de emergencia");
+    txt = "";
+    txtEstados = "";
+    memset(EstadoDip, 0 , sizeof(EstadoDip));
+  }
+  delay(500);
 }
