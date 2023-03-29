@@ -57,7 +57,6 @@ void setup()
   pinMode(10, INPUT);
   pinMode(1, OUTPUT);
   
-  
 }
 
 void loop()
@@ -73,13 +72,16 @@ void loop()
   
   if(EstadoDip[0] == 1 ){    
     dipTxt[0]= "1";
-    Estados[0] = "Se detecto un producto";
+    Estados[0] = "abarrotes ";
   }if(EstadoDip[1] == 1){
     dipTxt[1]= "1";
+    Estados[1] = "micelaneos";
   }if(EstadoDip[2] == 1){
     dipTxt[1]= "1";
+    Estados[2] = "No tipo";
   }if(EstadoDip[3] == 1){
     dipTxt[1]= "1";
+    Estados[2] = "No categoria";
   }
 
   for(int i =0; i <= 3; i++){
